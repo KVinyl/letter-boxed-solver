@@ -1,7 +1,10 @@
-﻿internal class Program
+﻿using Letter_Boxed_Solver;
+
+internal class Program
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("Letter Boxed Solver");
+        LetterBoxed game = new LetterBoxed();
+        game.Run();
     }
 }
