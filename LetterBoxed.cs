@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Letter_Boxed_Solver
+namespace LetterBoxedSolver
 {
     public class LetterBoxed
     {

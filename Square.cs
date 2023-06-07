@@ -4,41 +4,56 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Letter_Boxed_Solver
+namespace LetterBoxedSolver
 {
     public class Square
     {
-        public Square(Side side0, Side side1, Side side2, Side side3)
+        public Square(string side0, string side1, string side2, string side3)
         {
-            Sides = new Side[] { side0, side1, side2, side3 };
+            string[] sides = { side0, side1, side2, side3 };
 
-            for (int i = 0; i < Sides.Length; i++)
+            for (int i = 0; i < sides.Length; i++)
             {
-                foreach (char letter in Sides[i].Letters)
+                foreach (char letter in sides[i])
                 {
                     letterSideDict[letter] = i;
                 }
             }
-
-            Letters = letterSideDict.Keys.ToHashSet();
+            Letters = letterSideDict.Keys.ToArray();
+            unplayedLetters = new HashSet<char>(letterSideDict.Keys);
         }
 
-        public Side[] Sides { get; }
-        public HashSet<char> Letters { get; } 
+        private HashSet<char> playedLetters = new HashSet<char>();
+        private HashSet<char> unplayedLetters = new HashSet<char>();
         private Dictionary<char, int> letterSideDict = new Dictionary<char, int>();
+        public char[] Letters { get; }
+        public char[] PlayedLetters { get { return playedLetters.ToArray(); } }
+        public char[] UnplayedLetters { get { return unplayedLetters.ToArray(); } }
+
 
         public void Play(string word)
         {
-            foreach (Side side in Sides)
+            if (IsValidWord(word))
             {
-                side.Play(word);
+                HashSet<char> playingLetters = new HashSet<char>(word);
+                unplayedLetters.Except(playingLetters);
+                playedLetters.Union(playingLetters);
             }
         }
-        
+
         public bool IsValidWord(string word)
         {
-            HashSet<char> wordLetters = new HashSet<char>(word);
-            return wordLetters.IsSubsetOf(Letters);
+            int lastIndex = -1;
+            foreach (char letter in word)
+            {
+                int index = IndexOf(letter);
+                if (index == -1 || index == lastIndex)
+                {
+                    return false;
+                }
+                lastIndex = index;
+            }
+            return true;
         }
         public int IndexOf(char letter)
         {
@@ -51,7 +66,7 @@ namespace Letter_Boxed_Solver
 
         public bool IsUsed()
         {
-            return Sides.All(side => side.IsUsed());
+            return unplayedLetters.Count == 0;
         }
     }
 }
