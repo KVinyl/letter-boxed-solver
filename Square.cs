@@ -30,7 +30,6 @@ namespace LetterBoxedSolver
         public char[] PlayedLetters { get { return playedLetters.ToArray(); } }
         public char[] UnplayedLetters { get { return unplayedLetters.ToArray(); } }
 
-
         public void Play(string word)
         {
             if (IsValidWord(word))
