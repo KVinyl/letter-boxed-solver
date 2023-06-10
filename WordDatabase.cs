@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LetterBoxedSolver;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
@@ -25,10 +26,11 @@ namespace Letter_Boxed_Solver
             InitializeDatabase(alphabet.ToArray());
             LoadDatabase();
         }
-        public WordDatabase(char[] letters)
+
+        public WordDatabase(Square sq)
         {
-            InitializeDatabase(letters);
-            LoadDatabase();
+            InitializeDatabase(sq.Letters);
+            LoadDatabase(sq);
             Console.WriteLine(WordCount);
         }
 
@@ -37,7 +39,7 @@ namespace Letter_Boxed_Solver
         {
             foreach (char letter in letters)
             {
-                wordDatabase[letter] = new HashSet<string>();
+                wordDatabase[char.ToUpper(letter)] = new HashSet<string>();
             }
         }
 
@@ -59,6 +61,28 @@ namespace Letter_Boxed_Solver
                 Console.WriteLine(ex.Message);
             }
         }
+        private void LoadDatabase(Square sq)
+        {
+            try
+            {
+                using (StreamReader sr = new StreamReader(filename))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string word = sr.ReadLine();
+                        if (sq.IsValidWord(word))
+                        {
+                            AddWord(word);
+                        }
+                    }
+                }
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         public void AddWord(string word)
         {
             if (!string.IsNullOrEmpty(word))
@@ -82,6 +106,18 @@ namespace Letter_Boxed_Solver
                 }
             }
             return false;
+        }
+
+        public string[] ToArray()
+        {
+            List<string> wordList = new();
+            foreach (HashSet<string> wordSet in wordDatabase.Values)
+            {
+                wordList.AddRange(wordSet);
+            }
+
+            wordList.Sort();
+            return wordList.ToArray();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LetterBoxedSolver;
+﻿using Letter_Boxed_Solver;
+using LetterBoxedSolver;
 
 internal class Program
 {

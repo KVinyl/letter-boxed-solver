@@ -23,6 +23,7 @@ namespace LetterBoxedSolver
             unplayedLetters = new HashSet<char>(letterSideDict.Keys);
         }
 
+        private const int NumLettersPerSide = 3;
         private HashSet<char> playedLetters = new HashSet<char>();
         private HashSet<char> unplayedLetters = new HashSet<char>();
         private Dictionary<char, int> letterSideDict = new Dictionary<char, int>();
@@ -38,6 +39,11 @@ namespace LetterBoxedSolver
                 unplayedLetters.Except(playingLetters);
                 playedLetters.Union(playingLetters);
             }
+        }
+
+        public static bool IsValidSide(string letters)
+        {
+            return !string.IsNullOrEmpty(letters) && letters.Length == NumLettersPerSide && letters.All(char.IsLetter);
         }
 
         public bool IsValidWord(string word)
@@ -56,11 +62,12 @@ namespace LetterBoxedSolver
         }
         public int IndexOf(char letter)
         {
-            if (!letterSideDict.ContainsKey(letter))
+            char upperLetter = char.ToUpper(letter);
+            if (!letterSideDict.ContainsKey(upperLetter))
             {
                 return -1;
             }
-            return letterSideDict[letter];
+            return letterSideDict[upperLetter];
         }
 
         public bool IsUsed()
