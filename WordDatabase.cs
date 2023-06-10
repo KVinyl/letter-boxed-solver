@@ -21,17 +21,29 @@ namespace Letter_Boxed_Solver
 
         public WordDatabase()
         {
-            Initialize();
+            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            InitializeDatabase(alphabet.ToArray());
+            LoadDatabase();
+        }
+        public WordDatabase(char[] letters)
+        {
+            InitializeDatabase(letters);
+            LoadDatabase();
+            Console.WriteLine(WordCount);
         }
 
-        private void Initialize()
+        public int WordCount { get { return wordDatabase.Sum(x => x.Value.Count); } }
+        public const int WordLengthMin = 3;
+        private void InitializeDatabase(char[] letters)
         {
-            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            foreach (char letter in alphabet)
+            foreach (char letter in letters)
             {
                 wordDatabase[letter] = new HashSet<string>();
             }
+        }
 
+        private void LoadDatabase()
+        {
             try
             {
                 using (StreamReader sr = new StreamReader(filename))
@@ -40,7 +52,10 @@ namespace Letter_Boxed_Solver
                     {
                         string word = sr.ReadLine();
                         char firstLetter = word.ToUpper()[0];
-                        wordDatabase[firstLetter].Add(word);
+                        if (wordDatabase.ContainsKey(firstLetter) && word.Length >= WordLengthMin)
+                        {
+                            wordDatabase[firstLetter].Add(word);
+                        }
                     }
                 }
             }
@@ -51,3 +66,4 @@ namespace Letter_Boxed_Solver
         }
     }
 }
+

@@ -15,11 +15,11 @@ namespace LetterBoxedSolver
         private const int TurnLimit = 3;
         public void Run()
         {
-            WordDatabase wordDb = new WordDatabase();
-            Console.WriteLine(wordDb);
-
             string[] sides = LetterParser();
-            Square square = new Square(sides[0], sides[1], sides[2], sides[3]);
+            Square square = new(sides[0], sides[1], sides[2], sides[3]);
+
+            WordDatabase wordDb = new(square.Letters);
+            Console.WriteLine(wordDb);
         }
 
         private string[] LetterParser()
@@ -35,15 +35,14 @@ namespace LetterBoxedSolver
                     side = Console.ReadLine();
                     Console.WriteLine();
                 }
-
                 sides[i] = side.ToUpper();
             }
             return sides;
         }
 
-        private bool IsValidSide(string letters)
+        private static bool IsValidSide(string letters)
         {
-            return !string.IsNullOrEmpty(letters) && letters.Length == NumLettersPerSide && letters.All(Char.IsLetter);
+            return !string.IsNullOrEmpty(letters) && letters.Length == NumLettersPerSide && letters.All(char.IsLetter);
         }
     }
 }
