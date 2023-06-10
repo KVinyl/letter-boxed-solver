@@ -33,7 +33,6 @@ namespace Letter_Boxed_Solver
         }
 
         public int WordCount { get { return wordDatabase.Sum(x => x.Value.Count); } }
-        public const int WordLengthMin = 3;
         private void InitializeDatabase(char[] letters)
         {
             foreach (char letter in letters)
@@ -51,11 +50,7 @@ namespace Letter_Boxed_Solver
                     while (!sr.EndOfStream)
                     {
                         string word = sr.ReadLine();
-                        char firstLetter = word.ToUpper()[0];
-                        if (wordDatabase.ContainsKey(firstLetter) && word.Length >= WordLengthMin)
-                        {
-                            wordDatabase[firstLetter].Add(word);
-                        }
+                        AddWord(word);
                     }
                 }
             }
@@ -63,6 +58,30 @@ namespace Letter_Boxed_Solver
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+        public void AddWord(string word)
+        {
+            if (!string.IsNullOrEmpty(word))
+            {
+                char firstLetter = word.ToUpper()[0];
+                if (wordDatabase.TryGetValue(firstLetter, out HashSet<string> value))
+                {
+                    value.Add(word);
+                }
+            }   
+        }
+
+        public bool RemoveWord(string word)
+        {
+            if (!string.IsNullOrEmpty(word))
+            {
+                char firstLetter = word.ToUpper()[0];
+                if (wordDatabase.TryGetValue(firstLetter, out HashSet<string> value))
+                {
+                    return value.Remove(word);
+                }
+            }
+            return false;
         }
     }
 }
