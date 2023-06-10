@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Letter_Boxed_Solver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -11,8 +12,12 @@ namespace LetterBoxedSolver
     {
         private const int NumLettersPerSide = 3;
         private const int NumSides = 4;
+        private const int TurnLimit = 3;
         public void Run()
         {
+            WordDatabase wordDb = new WordDatabase();
+            Console.WriteLine(wordDb);
+
             string[] sides = LetterParser();
             Square square = new Square(sides[0], sides[1], sides[2], sides[3]);
         }
