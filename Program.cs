@@ -5,7 +5,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        LetterBoxed game = new LetterBoxed();
+        LetterBoxed game = new();
         game.Run();
     }
 }

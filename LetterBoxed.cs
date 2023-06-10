@@ -10,9 +10,9 @@ namespace LetterBoxedSolver
 {
     public class LetterBoxed
     {
-       
         private const int NumSides = 4;
         private const int TurnLimit = 3;
+
         public void Run()
         {
             string[] sides = LetterParser();
@@ -38,7 +38,5 @@ namespace LetterBoxedSolver
             }
             return sides;
         }
-
-        
     }
 }

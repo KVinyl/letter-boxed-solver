@@ -61,6 +61,7 @@ namespace Letter_Boxed_Solver
                 Console.WriteLine(ex.Message);
             }
         }
+
         private void LoadDatabase(Square sq)
         {
             try

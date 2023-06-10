@@ -19,6 +19,7 @@ namespace LetterBoxedSolver
                     letterSideDict[letter] = i;
                 }
             }
+
             Letters = letterSideDict.Keys.ToArray();
             unplayedLetters = new HashSet<char>(letterSideDict.Keys);
         }
@@ -27,9 +28,11 @@ namespace LetterBoxedSolver
         private HashSet<char> playedLetters = new HashSet<char>();
         private HashSet<char> unplayedLetters = new HashSet<char>();
         private Dictionary<char, int> letterSideDict = new Dictionary<char, int>();
+
         public char[] Letters { get; }
         public char[] PlayedLetters { get { return playedLetters.ToArray(); } }
         public char[] UnplayedLetters { get { return unplayedLetters.ToArray(); } }
+        public char LastLetter { get; private set; }
 
         public void Play(string word)
         {
