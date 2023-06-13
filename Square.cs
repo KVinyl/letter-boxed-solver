@@ -39,8 +39,8 @@ namespace LetterBoxedSolver
             if (IsValidWord(word))
             {
                 HashSet<char> playingLetters = new HashSet<char>(word);
-                unplayedLetters.Except(playingLetters);
-                playedLetters.Union(playingLetters);
+                unplayedLetters.ExceptWith(playingLetters);
+                playedLetters.UnionWith(playingLetters);
             }
         }
 
@@ -51,6 +51,12 @@ namespace LetterBoxedSolver
 
         public bool IsValidWord(string word)
         {
+            int minValidWordLength = 3;
+            if (word.Length < minValidWordLength)
+            {
+                return false;
+            }
+
             int lastIndex = -1;
             foreach (char letter in word)
             {

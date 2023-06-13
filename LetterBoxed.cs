@@ -19,6 +19,8 @@ namespace LetterBoxedSolver
             Square square = new(sides[0], sides[1], sides[2], sides[3]);
 
             WordDatabase wordDb = new(square);
+
+            Console.WriteLine(wordDb.ToArray()[0]);
         }
 
         private string[] LetterParser()
