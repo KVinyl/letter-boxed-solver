@@ -38,9 +38,10 @@ namespace LetterBoxedSolver
         {
             if (IsValidWord(word))
             {
-                HashSet<char> playingLetters = new HashSet<char>(word);
+                HashSet<char> playingLetters = new HashSet<char>(word.ToUpper());
                 unplayedLetters.ExceptWith(playingLetters);
                 playedLetters.UnionWith(playingLetters);
+                LastLetter = char.ToUpper(word[word.Length-1]);
             }
         }
 
@@ -53,6 +54,12 @@ namespace LetterBoxedSolver
         {
             int minValidWordLength = 3;
             if (word.Length < minValidWordLength)
+            {
+                return false;
+            }
+
+            char firstLetter = char.ToUpper(word[0]);
+            if (LastLetter != '\0' &&  firstLetter != LastLetter)
             {
                 return false;
             }
