@@ -12,13 +12,16 @@ namespace LetterBoxedSolver
     {
         private const int NumSides = 4;
         private const int TurnLimit = 3;
+        private List<string[]> result = new();
+
+        public string[][] Result { get { return result.ToArray(); } }
 
         public void Run()
         {
             string[] sides = LetterParser();
             Square square = new(sides[0], sides[1], sides[2], sides[3]);
 
-            WordDatabase wordDb = new(square);
+            WordDatabase wordDb = new(square); 
         }
 
         private string[] LetterParser()
@@ -37,6 +40,13 @@ namespace LetterBoxedSolver
                 sides[i] = side.ToUpper();
             }
             return sides;
+        }
+
+        private string[][] GeneratePossiblePermutations()
+        {
+            List<string[]> resultList = new();
+
+            return resultList.ToArray();
         }
     }
 }

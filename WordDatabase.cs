@@ -18,7 +18,7 @@ namespace Letter_Boxed_Solver
 
         /// words.txt is a file generated from the following URL:
         // https://github.com/dwyl/english-words/blob/master/words_alpha.txt
-        string filename = "../../../words.txt";
+        private string filename = "../../../words.txt";
 
         public WordDatabase()
         {
@@ -31,10 +31,19 @@ namespace Letter_Boxed_Solver
         {
             InitializeDatabase(sq.Letters);
             LoadDatabase(sq);
-            Console.WriteLine(WordCount);
         }
 
+        public string[] this[char ch]
+        {
+            get
+            {
+                List<string> wordList = wordDatabase[char.ToUpper(ch)].ToList();
+                wordList.Sort();
+                return wordList.ToArray();
+            }
+        }
         public int WordCount { get { return wordDatabase.Sum(x => x.Value.Count); } }
+
         private void InitializeDatabase(char[] letters)
         {
             foreach (char letter in letters)
@@ -93,7 +102,7 @@ namespace Letter_Boxed_Solver
                 {
                     value.Add(word);
                 }
-            }   
+            }
         }
 
         public bool RemoveWord(string word)
