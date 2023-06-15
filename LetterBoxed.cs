@@ -10,41 +10,28 @@ namespace LetterBoxedSolver
 {
     public class LetterBoxed
     {
-        private const int NumSides = 4;
+        public LetterBoxed(string side0, string side1, string side2, string side3)
+        {
+            Square = new(side0, side1, side2, side3);
+        }
+
         private const int TurnLimit = 3;
         private List<string[]> result = new();
 
         public string[][] Result { get { return result.ToArray(); } }
+        public Square Square { get; }
+        public WordDatabase WordDb { get; private set; }
 
         public void Run()
         {
-            string[] sides = LetterParser();
-            Square square = new(sides[0], sides[1], sides[2], sides[3]);
-
-            WordDatabase wordDb = new(square); 
+            WordDb = new(Square);    
         }
 
-        private string[] LetterParser()
-        {
-            string[] sides = new string[NumSides];
-
-            for (int i = 0; i < NumSides; i++)
-            {
-                string side = "";
-                while (!Square.IsValidSide(side))
-                {
-                    Console.WriteLine($"Enter the letters for side {i + 1}.");
-                    side = Console.ReadLine();
-                    Console.WriteLine();
-                }
-                sides[i] = side.ToUpper();
-            }
-            return sides;
-        }
-
+   
         private string[][] GeneratePossiblePermutations()
         {
             List<string[]> resultList = new();
+            // TODO
 
             return resultList.ToArray();
         }
