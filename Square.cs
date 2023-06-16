@@ -16,7 +16,7 @@ namespace LetterBoxedSolver
             {
                 foreach (char letter in Sides[i])
                 {
-                    letterSideDict[letter] = i;
+                    letterSideDict[char.ToUpper(letter)] = i;
                 }
             }
 
@@ -54,13 +54,15 @@ namespace LetterBoxedSolver
 
         public bool IsValidWord(string word)
         {
+            word = word.ToUpper();
+
             int minValidWordLength = 3;
             if (word.Length < minValidWordLength)
             {
                 return false;
             }
 
-            char firstLetter = char.ToUpper(word[0]);
+            char firstLetter = word[0];
             if (LastLetter != '\0' &&  firstLetter != LastLetter)
             {
                 return false;

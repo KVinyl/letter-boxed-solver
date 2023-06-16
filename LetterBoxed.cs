@@ -75,9 +75,20 @@ namespace LetterBoxedSolver
                     }
                 }
             }
-            // Test
-            Console.WriteLine("Done generating permutations");
+ 
             return resultList.ToArray();
+        }
+
+        public string DisplayResults()
+        {
+            string displayResult = "";
+            foreach (string[] words in Result)
+            {
+                Console.WriteLine(words);
+                displayResult += string.Join(", ", words) + "\n";
+            }
+
+            return displayResult;
         }
     }
 }
