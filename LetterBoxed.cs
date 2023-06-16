@@ -1,6 +1,7 @@
 ﻿using Letter_Boxed_Solver;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -27,12 +28,12 @@ namespace LetterBoxedSolver
             WordDb = new(Square);    
         }
 
-   
         private string[][] GeneratePossiblePermutations()
         {
-            List<string[]> resultList = new();
             // TODO
-
+            throw new NotImplementedException();
+            List<string[]> resultList = new();
+            
             return resultList.ToArray();
         }
     }

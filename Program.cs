@@ -28,6 +28,7 @@ public class Program
             }
             sides[i] = side.ToUpper();
         }
+
         return sides;
     }
 

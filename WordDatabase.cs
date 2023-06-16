@@ -118,7 +118,7 @@ namespace Letter_Boxed_Solver
             return false;
         }
 
-        public string[] ToArray()
+        public string[] AllWords()
         {
             List<string> wordList = new();
             foreach (HashSet<string> wordSet in wordDatabase.Values)
