@@ -25,38 +25,10 @@ namespace LetterBoxedSolver
 
         public void Run()
         {
-            // WordDb = new(Square);
-            WordDb = new();
-            WordDb.AddWord("mantis");
-            WordDb.AddWord("power");
-            WordDb.AddWord("superpower");
-            WordDb.AddWord("rew");
-
+            WordDb = new(Square);
+           
             string[][] wordPermutations = GenerateWordPermutations();
-            foreach (string[] permutation in wordPermutations)
-            {
-                string[] sides = Square.Sides;
-                Square testSquare = new(sides[0], sides[1], sides[2], sides[3]);
-
-                for (int i = 0; i < permutation.Length; i++)
-                {
-                    string word = permutation[i];
-                    testSquare.Play(word);
-
-                    if (testSquare.IsGameOver)
-                    {
-                        if (i < TurnLimit - 1)
-                        {
-                            result.Add(permutation.ToList().GetRange(0, i + 1).ToArray());
-                        }
-                        else
-                        {
-                            result.Add(permutation);
-                        }
-                        continue;
-                    }
-                }
-            }
+            GenerateResults(wordPermutations);
         }
 
         private string[][] GenerateWordPermutations()
@@ -84,12 +56,40 @@ namespace LetterBoxedSolver
             return resultList.ToArray();
         }
 
+        // TODO: Prevent duplicate permutations in Result
+        private void GenerateResults(string[][] wordPermutations)
+        {
+            foreach (string[] permutation in wordPermutations)
+            {
+                string[] sides = Square.Sides;
+                Square testSquare = new(sides[0], sides[1], sides[2], sides[3]);
+
+                for (int i = 0; i < permutation.Length; i++)
+                {
+                    string word = permutation[i];
+                    testSquare.Play(word);
+
+                    if (testSquare.IsGameOver)
+                    {
+                        if (i < TurnLimit - 1)
+                        {
+                            result.Add(permutation.ToList().GetRange(0, i + 1).ToArray());
+                        }
+                        else
+                        {
+                            result.Add(permutation);
+                        }
+                        continue;
+                    }
+                }
+            }
+        }
+
         public string DisplayResults()
         {
             string displayResult = "";
             foreach (string[] words in Result)
             {
-                Console.WriteLine(words);
                 displayResult += string.Join(", ", words) + "\n";
             }
 

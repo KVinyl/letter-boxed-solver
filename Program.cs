@@ -12,7 +12,7 @@ public class Program
         LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
         game.Run();
 
-        Console.WriteLine(game.DisplayResults);
+        Console.WriteLine(game.DisplayResults());
     }
 
     private static string[] LetterParser()
