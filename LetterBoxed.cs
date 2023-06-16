@@ -25,15 +25,58 @@ namespace LetterBoxedSolver
 
         public void Run()
         {
-            WordDb = new(Square);    
+            WordDb = new(Square);
+
+            string[][] wordPermutations = GenerateWordPermutations();
+            foreach (string[] permutation in wordPermutations)
+            {
+                string[] sides = Square.Sides;
+                Square testSquare = new(sides[0], sides[1], sides[2], sides[3]);
+
+                for (int i = 0; i < permutation.Length; i++)
+                {
+                    string word = permutation[i];
+                    testSquare.Play(word);
+
+                    if (testSquare.IsGameOver)
+                    {
+                        if (i < TurnLimit - 1)
+                        {
+                            result.Add(permutation.ToList().GetRange(0, i + 1).ToArray());
+                        }
+                        else
+                        {
+                            result.Add(permutation);
+                        }
+                        continue;
+                    }
+                }
+            }
         }
 
-        private string[][] GeneratePossiblePermutations()
+        private string[][] GenerateWordPermutations()
         {
-            // TODO
-            throw new NotImplementedException();
             List<string[]> resultList = new();
-            
+            string[] possibleWords = WordDb.AllWords();
+
+            // TODO Make algorithm more efficient
+            // and rely on TurnLimit for the length of word permutation
+            // Only makes 3-word permutations for now
+            foreach (string word0 in possibleWords)
+            {
+                char lastLetter0 = word0[word0.Length - 1];
+                foreach (string word1 in WordDb[lastLetter0])
+                {
+                    char lastLetter1 = word0[word0.Length - 1];
+                    foreach (string word2 in WordDb[lastLetter1])
+                    {
+                        string[] permutation = { word0, word1, word2 };
+                        resultList.Add(permutation);
+                    }
+                }
+            }
+            // Test
+            Console.WriteLine("Done generating permutations");
             return resultList.ToArray();
         }
     }

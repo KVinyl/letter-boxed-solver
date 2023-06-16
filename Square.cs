@@ -10,11 +10,11 @@ namespace LetterBoxedSolver
     {
         public Square(string side0, string side1, string side2, string side3)
         {
-            string[] sides = { side0, side1, side2, side3 };
+            Sides = new string[] { side0, side1, side2, side3 };
 
-            for (int i = 0; i < sides.Length; i++)
+            for (int i = 0; i < Sides.Length; i++)
             {
-                foreach (char letter in sides[i])
+                foreach (char letter in Sides[i])
                 {
                     letterSideDict[letter] = i;
                 }
@@ -29,10 +29,12 @@ namespace LetterBoxedSolver
         private HashSet<char> unplayedLetters = new HashSet<char>();
         private Dictionary<char, int> letterSideDict = new Dictionary<char, int>();
 
+        public string[] Sides { get; }
         public char[] Letters { get; }
         public char[] PlayedLetters { get { return playedLetters.ToArray(); } }
         public char[] UnplayedLetters { get { return unplayedLetters.ToArray(); } }
         public char LastLetter { get; private set; }
+        public bool IsGameOver { get { return unplayedLetters.Count == 0; } }
 
         public void Play(string word)
         {
@@ -84,11 +86,6 @@ namespace LetterBoxedSolver
                 return -1;
             }
             return letterSideDict[upperLetter];
-        }
-
-        public bool IsUsed()
-        {
-            return unplayedLetters.Count == 0;
         }
     }
 }
