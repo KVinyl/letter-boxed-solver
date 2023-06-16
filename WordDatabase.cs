@@ -24,7 +24,6 @@ namespace Letter_Boxed_Solver
         {
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             InitializeDatabase(alphabet.ToArray());
-            LoadDatabase();
         }
 
         public WordDatabase(Square sq)

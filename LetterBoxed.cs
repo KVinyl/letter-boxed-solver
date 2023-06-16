@@ -25,7 +25,12 @@ namespace LetterBoxedSolver
 
         public void Run()
         {
-            WordDb = new(Square);
+            // WordDb = new(Square);
+            WordDb = new();
+            WordDb.AddWord("mantis");
+            WordDb.AddWord("power");
+            WordDb.AddWord("superpower");
+            WordDb.AddWord("rew");
 
             string[][] wordPermutations = GenerateWordPermutations();
             foreach (string[] permutation in wordPermutations)
@@ -67,7 +72,7 @@ namespace LetterBoxedSolver
                 char lastLetter0 = word0[word0.Length - 1];
                 foreach (string word1 in WordDb[lastLetter0])
                 {
-                    char lastLetter1 = word0[word0.Length - 1];
+                    char lastLetter1 = word1[word1.Length - 1];
                     foreach (string word2 in WordDb[lastLetter1])
                     {
                         string[] permutation = { word0, word1, word2 };
