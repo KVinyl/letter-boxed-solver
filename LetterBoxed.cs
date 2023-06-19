@@ -60,31 +60,6 @@ namespace LetterBoxedSolver
             return null;
         }
 
-        private string[][] GenerateWordPermutations()
-        {
-            List<string[]> resultList = new();
-            string[] possibleWords = WordDb.AllWords();
-
-            // TODO Make algorithm more efficient
-            // and rely on TurnLimit for the length of word permutation
-            // Only makes 3-word permutations for now
-            foreach (string word0 in possibleWords)
-            {
-                char lastLetter0 = word0[word0.Length - 1];
-                foreach (string word1 in WordDb[lastLetter0])
-                {
-                    char lastLetter1 = word1[word1.Length - 1];
-                    foreach (string word2 in WordDb[lastLetter1])
-                    {
-                        string[] permutation = { word0, word1, word2 };
-                        resultList.Add(permutation);
-                    }
-                }
-            }
- 
-            return resultList.ToArray();
-        }
-
         // TODO: Prevent duplicate permutations in Result
 
         public string DisplayResults()
