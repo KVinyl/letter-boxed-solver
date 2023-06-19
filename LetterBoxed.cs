@@ -16,8 +16,7 @@ namespace LetterBoxedSolver
         {
             Square = new(side0, side1, side2, side3);
         }
-
-        private const int TurnLimit = 3;
+        private WordFilter wordFilter = new();
 
         public string[] Result { get; private set; }
         public Square Square { get; }
@@ -26,6 +25,7 @@ namespace LetterBoxedSolver
         public void Run()
         {
             WordDb = new(Square);
+            FilterWordDatabase();
            
             Result = GenerateSolution();
         }
@@ -52,7 +52,6 @@ namespace LetterBoxedSolver
                         {
                             return new string[] { word0, word1 };
                         }
-
                     }
                 }
             }
@@ -60,11 +59,22 @@ namespace LetterBoxedSolver
             return null;
         }
 
-        // TODO: Prevent duplicate permutations in Result
-
         public string DisplayResults()
         {
             return (Result != null) ? string.Join(", ", Result) : "";
+        }
+
+        public void FilterWord(string wordToFilter)
+        {
+            wordFilter.AddWord(wordToFilter);
+        }
+
+        private void FilterWordDatabase()
+        {
+            foreach (string word in wordFilter.Words)
+            {
+                WordDb.RemoveWord(word);
+            }
         }
     }
 }

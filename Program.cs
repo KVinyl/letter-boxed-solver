@@ -9,10 +9,34 @@ public class Program
     {
         string[] sides = LetterParser();
 
-        LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
-        game.Run();
+        bool gameOver = false;
+        while (!gameOver)
+        {
+            LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
+            game.Run();
 
-        Console.WriteLine(game.DisplayResults());
+            Console.WriteLine(game.DisplayResults());
+
+            Console.WriteLine("Did that solve the puzzle? (Y/N)");
+            string gameOverReply = Console.ReadLine();
+
+            if (!string.IsNullOrEmpty(gameOverReply) && gameOverReply.ToUpper()[0] == 'Y')
+            {
+                Console.WriteLine("Game Over. Thanks for playing.");
+                gameOver = true;
+            }
+            else
+            {
+                Console.WriteLine("What word did not work?");
+                string wordToFilter = Console.ReadLine().ToLower();
+
+                if (game.Result.Contains(wordToFilter))
+                {
+                    game.FilterWord(wordToFilter);
+                    Console.WriteLine($"{wordToFilter} has been added to the word filter.");
+                }
+            }
+        }
     }
 
     private static string[] LetterParser()

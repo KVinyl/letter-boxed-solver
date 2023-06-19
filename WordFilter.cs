@@ -14,8 +14,7 @@ namespace Letter_Boxed_Solver
             ExtractWords();
         }
       
-
-        private string filename = "wordfilter.txt";
+        private string filename = "../../../wordfilter.txt";
         public SortedSet<string> Words { get; private set; } = new();
 
         public void ExtractWords()
