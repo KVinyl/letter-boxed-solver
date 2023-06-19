@@ -1,5 +1,4 @@
-﻿using Letter_Boxed_Solver;
-using LetterBoxedSolver;
+﻿using LetterBoxedSolver;
 
 public class Program
 {
