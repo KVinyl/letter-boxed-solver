@@ -25,9 +25,9 @@ namespace LetterBoxedSolver
         }
 
         private const int NumLettersPerSide = 3;
-        private HashSet<char> playedLetters = new HashSet<char>();
-        private HashSet<char> unplayedLetters = new HashSet<char>();
-        private Dictionary<char, int> letterSideDict = new Dictionary<char, int>();
+        private HashSet<char> playedLetters = new();
+        private HashSet<char> unplayedLetters = new();
+        private Dictionary<char, int> letterSideDict = new();
 
         public string[] Sides { get; }
         public char[] Letters { get; }
