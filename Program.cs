@@ -19,6 +19,8 @@ public class Program
             Console.WriteLine("Did that solve the puzzle? (Y/N)");
             string gameOverReply = Console.ReadLine();
 
+            Console.WriteLine();
+
             if (!string.IsNullOrEmpty(gameOverReply) && gameOverReply.ToUpper()[0] == 'Y')
             {
                 Console.WriteLine("Game Over. Thanks for playing.");
@@ -33,7 +35,12 @@ public class Program
                 {
                     game.FilterWord(wordToFilter);
                     Console.WriteLine($"{wordToFilter} has been added to the word filter.");
+                } 
+                else
+                {
+                    Console.WriteLine($"{wordToFilter} was not found in the result.");
                 }
+                Console.WriteLine();
             }
         }
     }
