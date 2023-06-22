@@ -17,6 +17,7 @@ namespace LetterBoxedSolver
             Square = new(side0, side1, side2, side3);
         }
         private WordFilter wordFilter = new();
+        private Queue<string[]> permutationQueue = new();
 
         public string[] Result { get; private set; }
         public Square Square { get; }
@@ -26,37 +27,71 @@ namespace LetterBoxedSolver
         {
             WordDb = new(Square);
             FilterWordDatabase();
-           
+
             Result = Solve();
+        }
+
+        private void InitializePermutations()
+        {
+            if (permutationQueue.Count == 0)
+            {
+                List<string> possibleWords = WordDb.AllWords().ToList().OrderByDescending(x => x.Distinct().Count()).ToList();
+
+                foreach (string word in possibleWords)
+                {
+                    string[] permutation = { word };
+                    permutationQueue.Enqueue(permutation);
+                }
+            }
+        }
+
+        private bool IsWinningPermutation(string[] permutation)
+        {
+            string[] sides = Square.Sides;
+            Square testSquare = new(sides[0], sides[1], sides[2], sides[3]);
+
+            foreach (string word in permutation)
+            {
+                testSquare.Play(word);
+            }
+
+            return testSquare.IsGameOver;
+        }
+
+        private List<string[]> ExtendPermutation(string[] permutation)
+        {
+            List<string[]> permutationsList = new();
+
+            string lastWord = permutation[permutation.Length - 1];
+
+            foreach (string word in WordDb[lastWord[0]])
+            {
+                string[] extension = new string[] { word };
+                string[] newPermutation = permutation.Concat(extension).ToArray();
+
+                permutationsList.Add(newPermutation);
+            }
+
+                return permutationsList;
         }
 
         private string[] Solve()
         {
-            List<string> possibleWords = WordDb.AllWords().ToList().OrderByDescending(x => x.Distinct().Count()).ToList();
-          
-            // Brute Force
-            // Works only for two words
-            foreach (string word0 in possibleWords)
+            InitializePermutations();
+
+            while (true)
             {
-                foreach (string word1 in possibleWords)
+                string[] permutation = permutationQueue.Dequeue();
+                if (IsWinningPermutation(permutation))
                 {
-                    if (word0[word0.Length - 1] == word1[0])
-                    {
-                        string[] sides = Square.Sides;
-                        Square testSquare = new(sides[0], sides[1], sides[2], sides[3]);
+                    return permutation;
+                }
 
-                        testSquare.Play(word0);
-                        testSquare.Play(word1);
-
-                        if (testSquare.IsGameOver)
-                        {
-                            return new string[] { word0, word1 };
-                        }
-                    }
+                foreach (string[] newPermutation in ExtendPermutation(permutation))
+                {
+                    permutationQueue.Enqueue(newPermutation);
                 }
             }
-
-            return null;
         }
 
         public string DisplayResults()
