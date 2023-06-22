@@ -27,12 +27,12 @@ namespace LetterBoxedSolver
             WordDb = new(Square);
             FilterWordDatabase();
            
-            Result = GenerateSolution();
+            Result = Solve();
         }
 
-        private string[] GenerateSolution()
+        private string[] Solve()
         {
-            List<string> possibleWords = WordDb.AllWords().ToList().OrderByDescending(x => x.Length).ToList();
+            List<string> possibleWords = WordDb.AllWords().ToList().OrderByDescending(x => x.Distinct().Count()).ToList();
           
             // Brute Force
             // Works only for two words
