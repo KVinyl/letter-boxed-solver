@@ -23,13 +23,17 @@ namespace LetterBoxedSolver
         {
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             InitializeDatabase(alphabet.ToArray());
+            LoadDatabase();
         }
 
         public WordDatabase(Square sq)
         {
-            InitializeDatabase(sq.Letters);
-            LoadDatabase(sq);
+            Square = sq;
+            InitializeDatabase(Square.Letters);
+            LoadDatabase();
         }
+
+        public Square? Square { get; } = null;
 
         public string[] this[char ch]
         {
@@ -52,33 +56,25 @@ namespace LetterBoxedSolver
         {
             try
             {
-                using (StreamReader sr = new StreamReader(filename))
+                using (StreamReader sr = new(filename))
                 {
-                    while (!sr.EndOfStream)
+                    if (Square == null)
                     {
-                        string word = sr.ReadLine();
-                        AddWord(word);
-                    }
-                }
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        private void LoadDatabase(Square sq)
-        {
-            try
-            {
-                using (StreamReader sr = new StreamReader(filename))
-                {
-                    while (!sr.EndOfStream)
-                    {
-                        string word = sr.ReadLine();
-                        if (sq.IsValidWord(word))
+                        while (!sr.EndOfStream)
                         {
+                            string word = sr.ReadLine();
                             AddWord(word);
+                        }
+                    }
+                    else
+                    {
+                        while (!sr.EndOfStream)
+                        {
+                            string word = sr.ReadLine();
+                            if (Square.IsValidWord(word))
+                            {
+                                AddWord(word);
+                            }
                         }
                     }
                 }
@@ -129,4 +125,3 @@ namespace LetterBoxedSolver
         }
     }
 }
-
