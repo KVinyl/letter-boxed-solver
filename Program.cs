@@ -63,5 +63,4 @@ public class Program
 
         return sides;
     }
-
 }

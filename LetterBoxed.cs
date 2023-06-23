@@ -35,7 +35,7 @@ namespace LetterBoxedSolver
         {
             if (permutationQueue.Count == 0)
             {
-                List<string> possibleWords = WordDb.AllWords().ToList().OrderByDescending(x => x.Distinct().Count()).ToList();
+                List<string> possibleWords = WordDb.AllWords().OrderByDescending(x => x.Distinct().Count()).ToList();
 
                 foreach (string word in possibleWords)
                 {
@@ -50,10 +50,7 @@ namespace LetterBoxedSolver
             string[] sides = Square.Sides;
             Square testSquare = new(sides[0], sides[1], sides[2], sides[3]);
 
-            foreach (string word in permutation)
-            {
-                testSquare.Play(word);
-            }
+            testSquare.Play(permutation);
 
             return testSquare.IsGameOver;
         }
@@ -63,8 +60,9 @@ namespace LetterBoxedSolver
             List<string[]> permutationsList = new();
 
             string lastWord = permutation[permutation.Length - 1];
+            char lastChar = lastWord[lastWord.Length - 1];
 
-            foreach (string word in WordDb[lastWord[0]])
+            foreach (string word in WordDb[lastChar]) 
             {
                 string[] extension = new string[] { word };
                 string[] newPermutation = permutation.Concat(extension).ToArray();
@@ -72,7 +70,7 @@ namespace LetterBoxedSolver
                 permutationsList.Add(newPermutation);
             }
 
-                return permutationsList;
+            return permutationsList;
         }
 
         private string[] Solve()
