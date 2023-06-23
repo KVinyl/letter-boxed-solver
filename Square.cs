@@ -40,11 +40,17 @@ namespace LetterBoxedSolver
         {
             if (IsValidWord(word))
             {
-                HashSet<char> playingLetters = new HashSet<char>(word.ToUpper());
+                HashSet<char> playingLetters = new(word.ToUpper());
                 unplayedLetters.ExceptWith(playingLetters);
                 playedLetters.UnionWith(playingLetters);
                 LastLetter = char.ToUpper(word[word.Length-1]);
             }
+        }
+
+        public void Play(string[] words)
+        {
+            string combinedWord = string.Join("", words);
+            Play(combinedWord);
         }
 
         public static bool IsValidSide(string letters)
