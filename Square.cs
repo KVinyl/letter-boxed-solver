@@ -49,8 +49,10 @@ namespace LetterBoxedSolver
 
         public void Play(string[] words)
         {
-            string combinedWord = string.Join("", words);
-            Play(combinedWord);
+            foreach (string word in words)
+            {
+                Play(word);
+            }
         }
 
         public static bool IsValidSide(string letters)
