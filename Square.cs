@@ -47,14 +47,6 @@ namespace LetterBoxedSolver
             }
         }
 
-        public void Play(string[] words)
-        {
-            foreach (string word in words)
-            {
-                Play(word);
-            }
-        }
-
         public static bool IsValidSide(string letters)
         {
             return !string.IsNullOrEmpty(letters) && letters.Length == NumLettersPerSide && letters.All(char.IsLetter);

@@ -50,7 +50,10 @@ namespace LetterBoxedSolver
             string[] sides = Square.Sides;
             Square testSquare = new(sides[0], sides[1], sides[2], sides[3]);
 
-            testSquare.Play(permutation);
+            foreach (string word in permutation)
+            {
+                testSquare.Play(word);
+            }
 
             return testSquare.IsGameOver;
         }

@@ -1,66 +1,67 @@
-﻿using LetterBoxedSolver;
-
-public class Program
+﻿namespace LetterBoxedSolver
 {
-    private const int NumSides = 4;
-
-    private static void Main(string[] args)
+    public class Program
     {
-        string[] sides = LetterParser();
+        private const int NumSides = 4;
 
-        bool gameOver = false;
-        while (!gameOver)
+        private static void Main(string[] args)
         {
-            LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
-            game.Run();
+            string[] sides = LetterParser();
 
-            Console.WriteLine(game.DisplayResults());
-
-            Console.WriteLine("Did that solve the puzzle? (Y/N)");
-            string gameOverReply = Console.ReadLine();
-
-            Console.WriteLine();
-
-            if (!string.IsNullOrEmpty(gameOverReply) && gameOverReply.ToUpper()[0] == 'Y')
+            bool gameOver = false;
+            while (!gameOver)
             {
-                Console.WriteLine("Game Over. Thanks for playing.");
-                gameOver = true;
-            }
-            else
-            {
-                Console.WriteLine("What word did not work?");
-                string wordToFilter = Console.ReadLine().ToLower();
+                LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
+                game.Run();
 
-                if (game.Result.Contains(wordToFilter))
+                Console.WriteLine(game.DisplayResults());
+
+                Console.WriteLine("Did that solve the puzzle? (Y/N)");
+                string gameOverReply = Console.ReadLine();
+
+                Console.WriteLine();
+
+                if (!string.IsNullOrEmpty(gameOverReply) && gameOverReply.ToUpper()[0] == 'Y')
                 {
-                    game.FilterWord(wordToFilter);
-                    Console.WriteLine($"{wordToFilter} has been added to the word filter.");
-                } 
+                    Console.WriteLine("Game Over. Thanks for playing.");
+                    gameOver = true;
+                }
                 else
                 {
-                    Console.WriteLine($"{wordToFilter} was not found in the result.");
+                    Console.WriteLine("What word did not work?");
+                    string wordToFilter = Console.ReadLine().ToLower();
+
+                    if (game.Result.Contains(wordToFilter))
+                    {
+                        game.FilterWord(wordToFilter);
+                        Console.WriteLine($"{wordToFilter} has been added to the word filter.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{wordToFilter} was not found in the result.");
+                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
             }
         }
-    }
 
-    private static string[] LetterParser()
-    {
-        string[] sides = new string[NumSides];
-
-        for (int i = 0; i < NumSides; i++)
+        private static string[] LetterParser()
         {
-            string side = "";
-            while (!Square.IsValidSide(side))
-            {
-                Console.WriteLine($"Enter the letters for side {i + 1}.");
-                side = Console.ReadLine();
-                Console.WriteLine();
-            }
-            sides[i] = side.ToUpper();
-        }
+            string[] sides = new string[NumSides];
 
-        return sides;
+            for (int i = 0; i < NumSides; i++)
+            {
+                string side = "";
+                while (!Square.IsValidSide(side))
+                {
+                    Console.WriteLine($"Enter the letters for side {i + 1}.");
+                    side = Console.ReadLine();
+                    Console.WriteLine();
+                }
+                sides[i] = side.ToUpper();
+            }
+
+            return sides;
+        }
     }
 }
