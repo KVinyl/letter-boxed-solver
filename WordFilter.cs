@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Letter_Boxed_Solver
+namespace LetterBoxedSolver
 {
     public class WordFilter
     {

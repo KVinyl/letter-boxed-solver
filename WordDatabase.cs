@@ -1,5 +1,4 @@
-﻿using LetterBoxedSolver;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
@@ -10,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Letter_Boxed_Solver
+namespace LetterBoxedSolver
 {
     public class WordDatabase
     {

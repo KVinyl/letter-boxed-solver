@@ -1,4 +1,4 @@
-﻿using Letter_Boxed_Solver;
+﻿using LetterBoxedSolver;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
