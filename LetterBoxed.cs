@@ -12,10 +12,18 @@ namespace LetterBoxedSolver
 {
     public class LetterBoxed
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LetterBoxed"/> class.
+        /// </summary>
+        /// <param name="side0"></param>
+        /// <param name="side1"></param>
+        /// <param name="side2"></param>
+        /// <param name="side3"></param>
         public LetterBoxed(string side0, string side1, string side2, string side3)
         {
             Square = new(side0, side1, side2, side3);
         }
+
         private WordFilter wordFilter = new();
         private Queue<string[]> permutationQueue = new();
 
@@ -23,15 +31,22 @@ namespace LetterBoxedSolver
         public Square Square { get; }
         public WordDatabase WordDb { get; private set; }
 
+        /// <summary>
+        /// Runs the solver to find a winning word permutation for LetterBoxed.
+        /// </summary>
         public void Run()
         {
             WordDb = new(Square);
             FilterWordDatabase();
+            InitializePermutationQueue();
 
             Result = Solve();
         }
 
-        private void InitializePermutations()
+        /// <summary>
+        /// Set ups permutationQueue to queue of 1-word-length permutation.
+        /// </summary>
+        private void InitializePermutationQueue()
         {
             if (permutationQueue.Count == 0)
             {
@@ -45,6 +60,11 @@ namespace LetterBoxedSolver
             }
         }
 
+        /// <summary>
+        /// Determines whether permutation solves LetterBoxed.
+        /// </summary>
+        /// <param name="permutation"></param>
+        /// <returns>True if the permutation solves LetterBoxed, otherwise false.</returns>
         private bool IsWinningPermutation(string[] permutation)
         {
             string[] sides = Square.Sides;
@@ -58,17 +78,24 @@ namespace LetterBoxedSolver
             return testSquare.IsGameOver;
         }
 
-        private List<string[]> ExtendPermutation(string[] permutation)
+        /// <summary>
+        /// Takes rootPermutation of n length and generate list of permutations of (n+1) length.
+        /// Each generated permutation is the rootPermutation plus one valid additional word for
+        /// Letterboxed.
+        /// </summary>
+        /// <param name="rootPermutation"></param>
+        /// <returns>List of permutations generated.</returns>
+        private List<string[]> ExtendPermutation(string[] rootPermutation)
         {
             List<string[]> permutationsList = new();
 
-            string lastWord = permutation[permutation.Length - 1];
+            string lastWord = rootPermutation[rootPermutation.Length - 1];
             char lastChar = lastWord[lastWord.Length - 1];
 
             foreach (string word in WordDb[lastChar]) 
             {
                 string[] extension = new string[] { word };
-                string[] newPermutation = permutation.Concat(extension).ToArray();
+                string[] newPermutation = rootPermutation.Concat(extension).ToArray();
 
                 permutationsList.Add(newPermutation);
             }
@@ -76,10 +103,12 @@ namespace LetterBoxedSolver
             return permutationsList;
         }
 
+        /// <summary>
+        /// Finds a winning word permutation for LetterBoxed.
+        /// </summary>
+        /// <returns>Returns a winning word permutation for LetterBoxed.</returns>
         private string[] Solve()
         {
-            InitializePermutations();
-
             while (true)
             {
                 string[] permutation = permutationQueue.Dequeue();
@@ -100,11 +129,18 @@ namespace LetterBoxedSolver
             return (Result != null) ? string.Join(", ", Result) : "";
         }
 
+        /// <summary>
+        /// Adds wordToFilter to wordFilter.
+        /// </summary>
+        /// <param name="wordToFilter"></param>
         public void FilterWord(string wordToFilter)
         {
             wordFilter.AddWord(wordToFilter);
         }
 
+        /// <summary>
+        /// Removes all words in wordFilter from WordDb.
+        /// </summary>
         private void FilterWordDatabase()
         {
             foreach (string word in wordFilter.Words)
