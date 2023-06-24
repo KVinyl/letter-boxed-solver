@@ -8,6 +8,13 @@ namespace LetterBoxedSolver
 {
     public class Square
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Square"/> class.
+        /// </summary>
+        /// <param name="side0"></param>
+        /// <param name="side1"></param>
+        /// <param name="side2"></param>
+        /// <param name="side3"></param>
         public Square(string side0, string side1, string side2, string side3)
         {
             Sides = new string[] { side0, side1, side2, side3 };
@@ -36,6 +43,10 @@ namespace LetterBoxedSolver
         public char LastLetter { get; private set; }
         public bool IsGameOver { get { return unplayedLetters.Count == 0; } }
 
+        /// <summary>
+        /// Adjust unplayedLetters, playedLetters, and LastLetter if word is valid word.
+        /// </summary>
+        /// <param name="word"></param>
         public void Play(string word)
         {
             if (IsValidWord(word))
@@ -47,11 +58,21 @@ namespace LetterBoxedSolver
             }
         }
 
+        /// <summary>
+        /// Determines if letters is a valid side.
+        /// </summary>
+        /// <param name="letters"></param>
+        /// <returns>Returns true if letters represents a valid side, otherwise false.</returns>
         public static bool IsValidSide(string letters)
         {
             return !string.IsNullOrEmpty(letters) && letters.Length == NumLettersPerSide && letters.All(char.IsLetter);
         }
 
+        /// <summary>
+        /// Determines if word is a valid word for LetterBoxed.
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns>Returns true if word is a valid for LetterBoxed, otherwise false.</returns>
         public bool IsValidWord(string word)
         {
             word = word.ToUpper();
@@ -80,6 +101,12 @@ namespace LetterBoxedSolver
             }
             return true;
         }
+
+        /// <summary>
+        /// Determines index of letter based on the sides.
+        /// </summary>
+        /// <param name="letter"></param>
+        /// <returns>Returns index of sides. Returns -1 if not in any sides.</returns>
         public int IndexOf(char letter)
         {
             char upperLetter = char.ToUpper(letter);
