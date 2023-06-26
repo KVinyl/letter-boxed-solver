@@ -20,7 +20,6 @@
         private WordFilter wordFilter = new();
         private Queue<string[]> permutationQueue = new();
 
-        public string[]? Result { get; private set; } = null;
         public Square Square { get; }
         public WordDatabase WordDb { get; private set; }
 
@@ -73,7 +72,7 @@
             string lastWord = rootPermutation[rootPermutation.Length - 1];
             char lastChar = lastWord[lastWord.Length - 1];
 
-            foreach (string word in WordDb[lastChar]) 
+            foreach (string word in WordDb[lastChar])
             {
                 string[] extension = new string[] { word };
                 string[] newPermutation = rootPermutation.Concat(extension).ToArray();
@@ -90,24 +89,19 @@
         /// <returns>Returns a winning word permutation for LetterBoxed.</returns>
         public string[] Solve()
         {
-            while (Result == null)
+            while (true)
             {
                 string[] permutation = permutationQueue.Dequeue();
                 if (IsWinningPermutation(permutation))
                 {
-                    Result = permutation; 
+                    return permutation;
                 }
 
-                else
+                foreach (string[] newPermutation in ExtendPermutation(permutation))
                 {
-                    foreach (string[] newPermutation in ExtendPermutation(permutation))
-                    {
-                        permutationQueue.Enqueue(newPermutation);
-                    }
-                }     
+                    permutationQueue.Enqueue(newPermutation);
+                }
             }
-
-            return Result;
         }
 
         /// <summary>

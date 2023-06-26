@@ -15,15 +15,9 @@
                 Console.WriteLine("Solving...");
                 Console.WriteLine();
 
-                game.Solve();
+                string[] result = game.Solve();
 
-                if (game.Result == null)
-                {
-                    Console.WriteLine("No result found.");
-                    break;
-                }
-
-                string resultOutput = string.Join(", ", game.Result);
+                string resultOutput = string.Join(", ", result);
                 Console.WriteLine(resultOutput);
 
                 Console.WriteLine("Did that solve the puzzle? (Y/N)");
@@ -38,7 +32,7 @@
                 }
                 else
                 {
-                    PromptWordFilter(game);
+                    PromptWordFilter(game, result);
                 }
             }
         }
@@ -67,18 +61,12 @@
             return sides;
         }
 
-        private static void PromptWordFilter(LetterBoxed game)
+        private static void PromptWordFilter(LetterBoxed game, string[] words)
         {
-            if (game.Result == null)
-            {
-                return;
-            }
-
             Console.WriteLine("What word did not work?");
-
-            for (int i = 0; i < game.Result.Length; i++)
+            for (int i = 0; i < words.Length; i++)
             {
-                Console.WriteLine($"({i + 1}) {game.Result[i]}");
+                Console.WriteLine($"({i + 1}) {words[i]}");
             }
 
             Console.WriteLine();
@@ -86,12 +74,12 @@
 
             try
             {
-                int choice = Convert.ToInt32(Console.ReadLine());
-                int i = choice - 1;
+                int numInput = Convert.ToInt32(Console.ReadLine());
+                int i = numInput - 1;
 
-                if (i >= 0 && i < game.Result.Length)
+                if (i >= 0 && i < words.Length)
                 {
-                    string wordToFilter = game.Result[i];
+                    string wordToFilter = words[i];
                     game.FilterWord(wordToFilter);
                     Console.WriteLine($"{wordToFilter} has been added to the word filter.");
                 }

@@ -123,8 +123,7 @@
                 wordDatabase[firstLetter] = new();
             }
 
-            wordDatabase[firstLetter].Add(word.ToLower());
-            
+            wordDatabase[firstLetter].Add(word.ToLower());        
         }
 
         /// <summary>
