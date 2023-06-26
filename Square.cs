@@ -28,13 +28,13 @@
         private const int NumLettersPerSide = 3;
         private HashSet<char> playedLetters = new();
         private HashSet<char> unplayedLetters = new();
-        private Dictionary<char, int> letterSideDict = new();
+        private readonly Dictionary<char, int> letterSideDict = new();
 
         public string[] Sides { get; }
         public char[] Letters { get; }
         public char[] PlayedLetters { get { return playedLetters.ToArray(); } }
         public char[] UnplayedLetters { get { return unplayedLetters.ToArray(); } }
-        public char LastLetter { get; private set; }
+        public char? LastLetter { get; private set; } = null;
         public bool IsGameOver { get { return unplayedLetters.Count == 0; } }
 
         /// <summary>
@@ -78,7 +78,7 @@
             }
 
             char firstLetter = word[0];
-            if (LastLetter != '\0' &&  firstLetter != LastLetter)
+            if (LastLetter != null &&  firstLetter != LastLetter)
             {
                 return false;
             }

@@ -90,7 +90,7 @@
             }
             catch (FormatException)
             {
-                Console.WriteLine("Not a valid answer. No word has been added to word filter.");
+                Console.WriteLine("Not a valid input. No word has been added to word filter.");
             }
 
             Console.WriteLine();
