@@ -17,7 +17,7 @@ namespace LetterBoxedSolver
 
         /// words.txt is a file generated from the following URL:
         // https://github.com/dwyl/english-words/blob/master/words_alpha.txt
-        private string filename = "../../../words.txt";
+        private readonly string filename = "../../../words.txt";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WordDatabase"/> class.
@@ -46,12 +46,20 @@ namespace LetterBoxedSolver
         /// Gets string array of words with a starting letter of <param name="ch">ch</param>.
         /// </summary>
         /// <param name="ch"></param>
-        /// <returns>Returns string array of words with a starting letter of <param name="ch">ch</param>.</returns>
+        /// <returns>Returns string array of words with a starting letter of <param name="ch">ch</param>.
+        /// Otherwise, returns empty string array.</returns>
         public string[] this[char ch]
         {
             get
             {
-                return wordDatabase[char.ToUpper(ch)].ToArray();
+                try
+                {
+                    return wordDatabase[char.ToUpper(ch)].ToArray();
+                }
+                catch (KeyNotFoundException)
+                {
+                    return Array.Empty<string>();
+                }
             }
         }
 
@@ -129,7 +137,7 @@ namespace LetterBoxedSolver
         /// Removes word from WordDatabase if word is in WordDatabase.
         /// </summary>
         /// <param name="word"></param>
-        /// <returns>Returns true if word was in WordDatabase is now removed, otherwise false.</returns>
+        /// <returns>Returns true if word was in WordDatabase is now removed. Otherwise, returns false.</returns>
         public bool RemoveWord(string word)
         {
             if (!string.IsNullOrEmpty(word))
