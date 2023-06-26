@@ -120,11 +120,6 @@ namespace LetterBoxedSolver
             return Result;
         }
 
-        public string DisplayResults()
-        {
-            return (Result != null) ? string.Join(", ", Result) : "";
-        }
-
         /// <summary>
         /// Adds wordToFilter to wordFilter.
         /// </summary>

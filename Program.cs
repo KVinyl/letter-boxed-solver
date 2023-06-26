@@ -14,7 +14,7 @@
                 LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
                 game.Solve();
 
-                Console.WriteLine(game.DisplayResults());
+                Console.WriteLine(string.Join(", ", game.Result));
 
                 Console.WriteLine("Did that solve the puzzle? (Y/N)");
                 string gameOverReply = Console.ReadLine();
