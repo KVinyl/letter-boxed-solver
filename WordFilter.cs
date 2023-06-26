@@ -17,7 +17,7 @@ namespace LetterBoxedSolver
         private string filename = "../../../wordfilter.txt";
         public SortedSet<string> Words { get; private set; } = new();
 
-        public void ExtractWords()
+        private void ExtractWords()
         {
             try
             {
@@ -42,7 +42,7 @@ namespace LetterBoxedSolver
             UpdateFile();
         }
 
-        public void UpdateFile()
+        private void UpdateFile()
         {
             try
             {
