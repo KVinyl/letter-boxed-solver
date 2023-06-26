@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.IO;
-using System.IO.Enumeration;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace LetterBoxedSolver
+﻿namespace LetterBoxedSolver
 {
     public class WordDatabase
     {

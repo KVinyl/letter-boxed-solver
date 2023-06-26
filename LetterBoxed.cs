@@ -1,14 +1,4 @@
-﻿using LetterBoxedSolver;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.ComponentModel;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LetterBoxedSolver
+﻿namespace LetterBoxedSolver
 {
     public class LetterBoxed
     {
