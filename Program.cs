@@ -28,19 +28,7 @@
                 }
                 else
                 {
-                    Console.WriteLine("What word did not work?");
-                    string wordToFilter = Console.ReadLine().ToLower();
-
-                    if (game.Result.Contains(wordToFilter))
-                    {
-                        game.FilterWord(wordToFilter);
-                        Console.WriteLine($"{wordToFilter} has been added to the word filter.");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{wordToFilter} was not found in the result.");
-                    }
-                    Console.WriteLine();
+                    PromptWordFilter(game);
                 }
             }
         }
@@ -62,6 +50,23 @@
             }
 
             return sides;
+        }
+
+        private static void PromptWordFilter(LetterBoxed game)
+        {
+            Console.WriteLine("What word did not work?");
+            string wordToFilter = Console.ReadLine().ToLower();
+
+            if (game.Result.Contains(wordToFilter))
+            {
+                game.FilterWord(wordToFilter);
+                Console.WriteLine($"{wordToFilter} has been added to the word filter.");
+            }
+            else
+            {
+                Console.WriteLine($"{wordToFilter} was not found in the result.");
+            }
+            Console.WriteLine();
         }
     }
 }
