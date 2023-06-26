@@ -55,17 +55,36 @@
         private static void PromptWordFilter(LetterBoxed game)
         {
             Console.WriteLine("What word did not work?");
-            string wordToFilter = Console.ReadLine().ToLower();
 
-            if (game.Result.Contains(wordToFilter))
+            for (int i = 0; i < game.Result.Length; i++)
             {
-                game.FilterWord(wordToFilter);
-                Console.WriteLine($"{wordToFilter} has been added to the word filter.");
+                Console.WriteLine($"({i + 1}) {game.Result[i]}");
             }
-            else
+
+            Console.WriteLine();
+            Console.WriteLine("Enter corresponding number");
+
+            try
             {
-                Console.WriteLine($"{wordToFilter} was not found in the result.");
+                int choice = Convert.ToInt32(Console.ReadLine());
+                int i = choice - 1;
+
+                if (i >= 0 && i < game.Result.Length)
+                {
+                    string wordToFilter = game.Result[i];
+                    game.FilterWord(wordToFilter);
+                    Console.WriteLine($"{wordToFilter} has been added to the word filter.");
+                }
+                else
+                {
+                    Console.WriteLine("Not a valid number. No word has been added to word filter.");
+                }
             }
+            catch (FormatException)
+            {
+                Console.WriteLine("Not a valid answer. No word has been added to word filter.");
+            }
+
             Console.WriteLine();
         }
     }
