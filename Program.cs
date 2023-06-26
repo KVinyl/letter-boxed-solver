@@ -8,8 +8,7 @@
         {
             string[] sides = LetterParser();
 
-            bool gameOver = false;
-            while (!gameOver)
+            while (true)
             {
                 LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
 
@@ -18,17 +17,24 @@
 
                 game.Solve();
 
-                Console.WriteLine(string.Join(", ", game.Result));
+                if (game.Result == null)
+                {
+                    Console.WriteLine("No result found.");
+                    break;
+                }
+
+                string resultOutput = string.Join(", ", game.Result);
+                Console.WriteLine(resultOutput);
 
                 Console.WriteLine("Did that solve the puzzle? (Y/N)");
-                string gameOverReply = Console.ReadLine();
+                string? gameOverInput = Console.ReadLine();
 
                 Console.WriteLine();
 
-                if (!string.IsNullOrEmpty(gameOverReply) && gameOverReply.ToUpper()[0] == 'Y')
+                if (gameOverInput != null && gameOverInput.ToUpper()[0] == 'Y')
                 {
                     Console.WriteLine("Game Over. Thanks for playing.");
-                    gameOver = true;
+                    break;
                 }
                 else
                 {
@@ -47,7 +53,12 @@
                 while (!Square.IsValidSide(side))
                 {
                     Console.WriteLine($"Enter the letters for side {i + 1}.");
-                    side = Console.ReadLine();
+                    string? lettersInput = Console.ReadLine();
+                    if (lettersInput != null)
+                    {
+                        side = lettersInput;
+                    }
+                    
                     Console.WriteLine();
                 }
                 sides[i] = side.ToUpper();
@@ -58,6 +69,11 @@
 
         private static void PromptWordFilter(LetterBoxed game)
         {
+            if (game.Result == null)
+            {
+                return;
+            }
+
             Console.WriteLine("What word did not work?");
 
             for (int i = 0; i < game.Result.Length; i++)

@@ -21,8 +21,12 @@
                 {
                     while (!sr.EndOfStream)
                     {
-                        string line = sr.ReadLine();
-                        Words.Add(line.ToLower());
+                        string? line = sr.ReadLine();
+
+                        if (!string.IsNullOrEmpty(line))
+                        {
+                            Words.Add(line.ToLower());
+                        }
                     }
                 }
             }

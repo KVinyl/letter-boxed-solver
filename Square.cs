@@ -57,7 +57,7 @@
         /// </summary>
         /// <param name="letters"></param>
         /// <returns>Returns true if letters represents a valid side, otherwise false.</returns>
-        public static bool IsValidSide(string letters)
+        public static bool IsValidSide(string? letters)
         {
             return !string.IsNullOrEmpty(letters) && letters.Length == NumLettersPerSide && letters.All(char.IsLetter);
         }

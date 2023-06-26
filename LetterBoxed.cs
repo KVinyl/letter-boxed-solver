@@ -20,7 +20,7 @@
         private WordFilter wordFilter = new();
         private Queue<string[]> permutationQueue = new();
 
-        public string[] Result { get; private set; }
+        public string[]? Result { get; private set; } = null;
         public Square Square { get; }
         public WordDatabase WordDb { get; private set; }
 

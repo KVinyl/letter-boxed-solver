@@ -83,16 +83,20 @@
                     {
                         while (!sr.EndOfStream)
                         {
-                            string word = sr.ReadLine();
-                            AddWord(word);
+                            string? word = sr.ReadLine();
+
+                            if (word != null)
+                            {
+                                AddWord(word);
+                            }
                         }
                     }
                     else
                     {
                         while (!sr.EndOfStream)
                         {
-                            string word = sr.ReadLine();
-                            if (Square.IsValidWord(word))
+                            string? word = sr.ReadLine();
+                            if (word != null && Square.IsValidWord(word))
                             {
                                 AddWord(word);
                             }
@@ -112,14 +116,15 @@
         /// <param name="word"></param>
         public void AddWord(string word)
         {
-            if (!string.IsNullOrEmpty(word))
+            char firstLetter = word.ToUpper()[0];
+
+            if (!wordDatabase.ContainsKey(firstLetter))
             {
-                char firstLetter = word.ToUpper()[0];
-                if (wordDatabase.TryGetValue(firstLetter, out SortedSet<string> value))
-                {
-                    value.Add(word);
-                }
+                wordDatabase[firstLetter] = new();
             }
+
+            wordDatabase[firstLetter].Add(word.ToLower());
+            
         }
 
         /// <summary>
@@ -129,13 +134,10 @@
         /// <returns>Returns true if word was in WordDatabase is now removed. Otherwise, returns false.</returns>
         public bool RemoveWord(string word)
         {
-            if (!string.IsNullOrEmpty(word))
+            char firstLetter = word.ToUpper()[0];
+            if (wordDatabase.ContainsKey(firstLetter))
             {
-                char firstLetter = word.ToUpper()[0];
-                if (wordDatabase.TryGetValue(firstLetter, out SortedSet<string> value))
-                {
-                    return value.Remove(word);
-                }
+                return wordDatabase[firstLetter].Remove(word.ToLower());
             }
 
             return false;
