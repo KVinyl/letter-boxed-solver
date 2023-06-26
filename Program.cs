@@ -12,7 +12,7 @@
             while (!gameOver)
             {
                 LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
-                game.Run();
+                game.Solve();
 
                 Console.WriteLine(game.DisplayResults());
 

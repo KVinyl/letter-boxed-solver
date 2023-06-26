@@ -22,6 +22,9 @@ namespace LetterBoxedSolver
         public LetterBoxed(string side0, string side1, string side2, string side3)
         {
             Square = new(side0, side1, side2, side3);
+            WordDb = new(Square);
+            FilterWordDatabase();
+            InitializePermutationQueue();
         }
 
         private WordFilter wordFilter = new();
@@ -30,18 +33,6 @@ namespace LetterBoxedSolver
         public string[] Result { get; private set; }
         public Square Square { get; }
         public WordDatabase WordDb { get; private set; }
-
-        /// <summary>
-        /// Runs the solver to find a winning word permutation for LetterBoxed.
-        /// </summary>
-        public void Run()
-        {
-            WordDb = new(Square);
-            FilterWordDatabase();
-            InitializePermutationQueue();
-
-            Result = Solve();
-        }
 
         /// <summary>
         /// Set ups permutationQueue to queue of 1-word-length permutation.
@@ -107,21 +98,26 @@ namespace LetterBoxedSolver
         /// Finds a winning word permutation for LetterBoxed.
         /// </summary>
         /// <returns>Returns a winning word permutation for LetterBoxed.</returns>
-        private string[] Solve()
+        public string[] Solve()
         {
-            while (true)
+            while (Result == null)
             {
                 string[] permutation = permutationQueue.Dequeue();
                 if (IsWinningPermutation(permutation))
                 {
-                    return permutation;
+                    Result = permutation; 
                 }
 
-                foreach (string[] newPermutation in ExtendPermutation(permutation))
+                else
                 {
-                    permutationQueue.Enqueue(newPermutation);
-                }
+                    foreach (string[] newPermutation in ExtendPermutation(permutation))
+                    {
+                        permutationQueue.Enqueue(newPermutation);
+                    }
+                }     
             }
+
+            return Result;
         }
 
         public string DisplayResults()
