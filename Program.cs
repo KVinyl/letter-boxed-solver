@@ -12,6 +12,10 @@
             while (!gameOver)
             {
                 LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
+
+                Console.WriteLine("Solving...");
+                Console.WriteLine();
+
                 game.Solve();
 
                 Console.WriteLine(string.Join(", ", game.Result));
