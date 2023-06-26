@@ -14,9 +14,12 @@ namespace LetterBoxedSolver
             ExtractWords();
         }
       
-        private string filename = "../../../wordfilter.txt";
+        private readonly string filename = "../../../wordfilter.txt";
         public SortedSet<string> Words { get; private set; } = new();
 
+        /// <summary>
+        /// Reads and extracts words from file has a filtered word on each line.
+        /// </summary>
         private void ExtractWords()
         {
             try
@@ -36,12 +39,9 @@ namespace LetterBoxedSolver
             }
         }
 
-        public void AddWord(string wordToAdd)
-        {
-            Words.Add(wordToAdd);
-            UpdateFile();
-        }
-
+        /// <summary>
+        /// Writes to file the filtered words with each word on each line.
+        /// </summary>
         private void UpdateFile()
         {
             try
@@ -58,6 +58,16 @@ namespace LetterBoxedSolver
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Adds wordToAdd to WordFilter.
+        /// </summary>
+        /// <param name="wordToAdd"></param>
+        public void AddWord(string wordToAdd)
+        {
+            Words.Add(wordToAdd);
+            UpdateFile();
         }
     }
 }

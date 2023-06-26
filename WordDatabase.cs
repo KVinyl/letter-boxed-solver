@@ -19,6 +19,9 @@ namespace LetterBoxedSolver
         // https://github.com/dwyl/english-words/blob/master/words_alpha.txt
         private string filename = "../../../words.txt";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WordDatabase"/> class.
+        /// </summary>
         public WordDatabase()
         {
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -26,6 +29,10 @@ namespace LetterBoxedSolver
             LoadDatabase();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WordDatabase"/> class with 
+        /// a Square parameter.
+        /// </summary>
         public WordDatabase(Square sq)
         {
             Square = sq;
@@ -35,6 +42,11 @@ namespace LetterBoxedSolver
 
         public Square? Square { get; } = null;
 
+        /// <summary>
+        /// Gets string array of words with a starting letter of <param name="ch">ch</param>.
+        /// </summary>
+        /// <param name="ch"></param>
+        /// <returns>Returns string array of words with a starting letter of <param name="ch">ch</param>.</returns>
         public string[] this[char ch]
         {
             get
@@ -42,8 +54,17 @@ namespace LetterBoxedSolver
                 return wordDatabase[char.ToUpper(ch)].ToArray();
             }
         }
+
+        /// <summary>
+        /// Gets total count of all words in WordDatabase object.
+        /// </summary>
         public int WordCount { get { return wordDatabase.Sum(x => x.Value.Count); } }
 
+        /// <summary>
+        /// Initializes WordDatabase object with each key being an element in <param name="letters">letters</param> with
+        /// a value of an empty SortedSet.
+        /// </summary>
+        /// <param name="letters"></param>
         private void InitializeDatabase(char[] letters)
         {
             foreach (char letter in letters)
@@ -52,6 +73,9 @@ namespace LetterBoxedSolver
             }
         }
 
+        /// <summary>
+        /// Reads words from file and loads them to WordDatabase object.
+        /// </summary>
         private void LoadDatabase()
         {
             try
@@ -85,6 +109,10 @@ namespace LetterBoxedSolver
             }
         }
 
+        /// <summary>
+        /// Adds word to WordDatabase.
+        /// </summary>
+        /// <param name="word"></param>
         public void AddWord(string word)
         {
             if (!string.IsNullOrEmpty(word))
@@ -97,6 +125,11 @@ namespace LetterBoxedSolver
             }
         }
 
+        /// <summary>
+        /// Removes word from WordDatabase if word is in WordDatabase.
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns>Returns true if word was in WordDatabase is now removed, otherwise false.</returns>
         public bool RemoveWord(string word)
         {
             if (!string.IsNullOrEmpty(word))
@@ -111,6 +144,10 @@ namespace LetterBoxedSolver
             return false;
         }
 
+        /// <summary>
+        /// Gets all words in WordDatabase.
+        /// </summary>
+        /// <returns>Returns a string array of all words in WordDatabase.</returns>
         public string[] AllWords()
         {
             List<string> wordList = new();
