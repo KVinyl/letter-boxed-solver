@@ -32,7 +32,19 @@
                 }
                 else
                 {
-                    PromptWordFilter(game, result);
+                    string? wordToFilter = PromptWordFilter(result);
+
+                    if (wordToFilter != null)
+                    {
+                        game.FilterWord(wordToFilter);
+                        Console.WriteLine($"{wordToFilter} has been added to the word filter.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No word has been added to the word filter.");
+                    }
+
+                    Console.WriteLine();
                 }
             }
         }
@@ -52,7 +64,7 @@
                     {
                         side = lettersInput;
                     }
-                    
+
                     Console.WriteLine();
                 }
                 sides[i] = side.ToUpper();
@@ -61,39 +73,44 @@
             return sides;
         }
 
-        private static void PromptWordFilter(LetterBoxed game, string[] words)
+        private static string? PromptWordFilter(string[] words)
         {
-            Console.WriteLine("What word did not work?");
-            for (int i = 0; i < words.Length; i++)
+            while (true)
             {
-                Console.WriteLine($"({i + 1}) {words[i]}");
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Enter corresponding number");
-
-            try
-            {
-                int numInput = Convert.ToInt32(Console.ReadLine());
-                int i = numInput - 1;
-
-                if (i >= 0 && i < words.Length)
+                Console.WriteLine("What word did not work?");
+                for (int i = 0; i < words.Length; i++)
                 {
-                    string wordToFilter = words[i];
-                    game.FilterWord(wordToFilter);
-                    Console.WriteLine($"{wordToFilter} has been added to the word filter.");
+                    Console.WriteLine($"({i + 1}) {words[i]}");
                 }
-                else
-                {
-                    Console.WriteLine("Not a valid number. No word has been added to word filter.");
-                }
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Not a valid input. No word has been added to word filter.");
-            }
 
-            Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("Enter corresponding number. Enter 0 to cancel.");
+
+                try
+                {
+                    int numInput = Convert.ToInt32(Console.ReadLine());
+
+                    if (numInput == 0)
+                    {
+                        return null;
+                    }
+                    else if (numInput > 0 && numInput <= words.Length)
+                    {
+                        string wordToFilter = words[numInput - 1];
+                        return wordToFilter;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Not a valid number. Try again.");
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Not a valid input. Try again.");
+                }
+
+                Console.WriteLine();
+            }
         }
     }
 }
