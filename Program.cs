@@ -56,7 +56,7 @@
             for (int i = 0; i < NumSides; i++)
             {
                 string side = "";
-                while (!Square.IsValidSide(side))
+                while (true)
                 {
                     Console.WriteLine($"Enter the letters for side {i + 1}.");
                     string? lettersInput = Console.ReadLine();
@@ -66,6 +66,15 @@
                     }
 
                     Console.WriteLine();
+
+                    if (Square.IsValidSide(side))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Input is not valid. Please try again.");
+                    }
                 }
                 sides[i] = side.ToUpper();
             }
