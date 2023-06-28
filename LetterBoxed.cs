@@ -12,31 +12,37 @@
         public LetterBoxed(string side0, string side1, string side2, string side3)
         {
             Square = new(side0, side1, side2, side3);
-            WordDb = new(Square);
-            FilterWordDatabase();
-            InitializePermutationQueue();
+            Reset();
         }
 
         private WordFilter wordFilter = new();
         private Queue<string[]> permutationQueue = new();
 
         public Square Square { get; }
-        public WordDatabase WordDb { get; private set; }
+        public WordDatabase WordDb { get; private set; } = new();
+
+        /// <summary>
+        /// Initalizes WordDb, filters words from WordDb, and initializes PermutationQueue.
+        /// </summary>
+        public void Reset()
+        {
+            WordDb = new(Square);
+            FilterWordDatabase();
+            InitializePermutationQueue();
+        }
 
         /// <summary>
         /// Set ups permutationQueue to queue of 1-word-length permutation.
         /// </summary>
         private void InitializePermutationQueue()
         {
-            if (permutationQueue.Count == 0)
-            {
-                List<string> possibleWords = WordDb.AllWords().OrderByDescending(x => x.Distinct().Count()).ToList();
+            permutationQueue.Clear();
+            List<string> possibleWords = WordDb.AllWords().OrderByDescending(x => x.Distinct().Count()).ToList();
 
-                foreach (string word in possibleWords)
-                {
-                    string[] permutation = { word };
-                    permutationQueue.Enqueue(permutation);
-                }
+            foreach (string word in possibleWords)
+            {
+                string[] permutation = { word };
+                permutationQueue.Enqueue(permutation);
             }
         }
 

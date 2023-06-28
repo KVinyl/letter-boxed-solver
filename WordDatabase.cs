@@ -15,7 +15,6 @@
         {
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             InitializeDatabase(alphabet.ToArray());
-            LoadDatabase();
         }
 
         /// <summary>
@@ -84,7 +83,6 @@
                         while (!sr.EndOfStream)
                         {
                             string? word = sr.ReadLine();
-
                             if (word != null)
                             {
                                 AddWord(word);

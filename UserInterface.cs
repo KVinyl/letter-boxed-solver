@@ -6,11 +6,10 @@
         public void Run()
         {
             string[] sides = LetterParser();
+            LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
 
             while (true)
             {
-                LetterBoxed game = new(sides[0], sides[1], sides[2], sides[3]);
-
                 Console.WriteLine("Solving...");
                 Console.WriteLine();
 
@@ -20,14 +19,20 @@
                 Console.WriteLine(resultOutput);
 
                 Console.WriteLine("Did that solve the puzzle? (Y/N)");
-                string? gameOverInput = Console.ReadLine();
+                string? isSolvedInput = Console.ReadLine();
 
                 Console.WriteLine();
 
-                if (gameOverInput != null && gameOverInput.ToUpper()[0] == 'Y')
+                if (IsYes(isSolvedInput))
                 {
-                    Console.WriteLine("Game Over. Thanks for playing.");
-                    break;
+                    Console.WriteLine("Do you want another solution? (Y/N)");
+                    string? continueInput = Console.ReadLine();
+
+                    if (!IsYes(continueInput))
+                    {
+                        Console.WriteLine("Game Over. Thanks for playing.");
+                        break;
+                    }
                 }
                 else
                 {
@@ -44,8 +49,14 @@
                     }
 
                     Console.WriteLine();
+                    game.Reset();
                 }
             }
+        }
+
+        private bool IsYes(string? str)
+        {
+            return !string.IsNullOrEmpty(str) && str.ToUpper()[0] == 'Y';
         }
 
         private string[] LetterParser()
