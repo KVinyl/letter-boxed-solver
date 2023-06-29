@@ -13,6 +13,8 @@
 
         private WordFilter wordFilter = new();
         private Queue<string[]> permutationQueue = new();
+        // A record of winning permutations in string form with a comma in between each word.
+        private HashSet<string> solutions = new();
 
         public Square Square { get; }
         public WordDatabase WordDb { get; private set; } = new();
@@ -92,8 +94,11 @@
             while (true)
             {
                 string[] permutation = permutationQueue.Dequeue();
-                if (IsWinningPermutation(permutation))
+                string permutationString = PermutationToString(permutation);
+
+                if (IsWinningPermutation(permutation) && !solutions.Contains(permutationString))
                 {
+                    solutions.Add(permutationString);
                     return permutation;
                 }
 
@@ -122,6 +127,15 @@
             {
                 WordDb.RemoveWord(word);
             }
+        }
+
+        /// <summary>
+        /// Converts a string array to a string with a comma in between each word.
+        /// </summary>
+        /// <returns>A string that represents a string array with a comma in between each word.</returns>
+        public string PermutationToString(string[] permutation)
+        {
+            return string.Join(",", permutation);
         }
     }
 }
