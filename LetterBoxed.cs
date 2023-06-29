@@ -5,10 +5,6 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="LetterBoxed"/> class.
         /// </summary>
-        /// <param name="side0"></param>
-        /// <param name="side1"></param>
-        /// <param name="side2"></param>
-        /// <param name="side3"></param>
         public LetterBoxed(string side0, string side1, string side2, string side3)
         {
             Square = new(side0, side1, side2, side3);
@@ -49,7 +45,6 @@
         /// <summary>
         /// Determines whether permutation solves LetterBoxed.
         /// </summary>
-        /// <param name="permutation"></param>
         /// <returns>True if the permutation solves LetterBoxed, otherwise false.</returns>
         private bool IsWinningPermutation(string[] permutation)
         {
@@ -69,7 +64,6 @@
         /// Each generated permutation is the rootPermutation plus one valid additional word for
         /// Letterboxed.
         /// </summary>
-        /// <param name="rootPermutation"></param>
         /// <returns>List of permutations generated.</returns>
         private List<string[]> ExtendPermutation(string[] rootPermutation)
         {
