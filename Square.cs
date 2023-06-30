@@ -51,9 +51,9 @@
         /// Determines if letters is a valid side.
         /// </summary>
         /// <returns>Returns true if letters represents a valid side, otherwise false.</returns>
-        public static bool IsValidSide(string? letters)
+        public static bool IsValidSide(string letters)
         {
-            return !string.IsNullOrEmpty(letters) && letters.Length == NumLettersPerSide && letters.All(char.IsLetter);
+            return letters.Length == NumLettersPerSide && letters.All(char.IsLetter);
         }
 
         /// <summary>

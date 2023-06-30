@@ -28,6 +28,8 @@
                     Console.WriteLine("Do you want another solution? (Y/N)");
                     string? continueInput = Console.ReadLine();
 
+                    Console.WriteLine();
+
                     if (!IsYes(continueInput))
                     {
                         Console.WriteLine("Game Over. Thanks for playing.");
@@ -62,31 +64,41 @@
         private string[] LetterParser()
         {
             string[] sides = new string[NumSides];
+            HashSet<char> squareLetters = new();
 
             for (int i = 0; i < NumSides; i++)
             {
-                string side = "";
+                string side;
                 while (true)
                 {
                     Console.WriteLine($"Enter the letters for side {i + 1}.");
                     string? lettersInput = Console.ReadLine();
-                    if (lettersInput != null)
-                    {
-                        side = lettersInput;
-                    }
+
+                    side = (lettersInput != null) ? lettersInput.ToUpper() : "";
 
                     Console.WriteLine();
 
                     if (Square.IsValidSide(side))
                     {
-                        break;
+                        // Prohibits duplicate letters in square.
+                        HashSet<char> sideLetters = new(side);
+                        if (!squareLetters.Overlaps(sideLetters))
+                        {
+                            squareLetters.UnionWith(sideLetters);
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Input has at least one letter already in a previous side.");
+                        }
                     }
                     else
                     {
                         Console.WriteLine("Input is not valid. Please try again.");
                     }
                 }
-                sides[i] = side.ToUpper();
+
+                sides[i] = side;
             }
 
             return sides;
