@@ -6,7 +6,7 @@
 
         /// words.txt is a file generated from the following URL:
         // https://github.com/dwyl/english-words/blob/master/words_alpha.txt
-        private readonly string filename = "../../../words.txt";
+        private readonly string filename = "words.txt";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WordDatabase"/> class.

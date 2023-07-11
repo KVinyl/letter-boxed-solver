@@ -7,7 +7,7 @@
             ExtractWords();
         }
       
-        private readonly string filename = "../../../wordfilter.txt";
+        private readonly string filename = "wordfilter.txt";
         public SortedSet<string> Words { get; private set; } = new();
 
         /// <summary>
